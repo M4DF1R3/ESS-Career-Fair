@@ -1,0 +1,782 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&family=Noto+Sans+JP&family=Roboto&family=Source+Sans+Pro&display=swap"
+        rel="stylesheet">
+    <div class="overall-wrapping">
+        <div class="dropdown">
+            <p class="dropbtn">Filter by Discipline</p>
+            <div class="dropdown-content">
+                <button class="discipline-btn" id="All" data-filter="All"> Show all</button>
+                <button class="discipline-btn" id="Chemical" data-filter="Chemical"> Chemical</button>
+                <button class="discipline-btn" id="Civil" data-filter="Civil"> Civil</button>
+                <button class="discipline-btn" id="Computer" data-filter="Computer"> Computer</button>
+                <button class="discipline-btn" id="Electrical" data-filter="Electrical"> Electrical</button>
+                <button class="discipline-btn" id="Environmental" data-filter="Environmental"> Environmental</button>
+                <button class="discipline-btn" id="Materials" data-filter="Materials"> Materials</button>
+                <button class="discipline-btn" id="Mechanical" data-filter="Mechanical"> Mechanical</button>
+                <button class="discipline-btn" id="Mining" data-filter="Mining"> Mining</button>
+                <button class="discipline-btn" id="Petroleum" data-filter="Petroleum"> Petroleum</button>
+                <button class="discipline-btn" id="Engineering Physics" data-filter="Engineering Physics"> Engineering
+                    Physics</button>
+                <button class="discipline-btn" id="First Year Students" data-filter="First Year Students"> First Year
+                    Students</button>
+            </div>
+        </div>
+
+        <div id="companies-container"></div>
+    </div>
+
+    <script>
+        const BUTTONS = document.querySelectorAll('.discipline-btn');
+        let FILTER = 'All';
+        // sizes:['Height of gallary-image' Used Sizing(200-300), 'Margin of the Image to Move Down By', 'Size of Image']
+        const companies =
+            [{  name: "Aecon",
+                description: 'Aecon is a market leader with a self-perform competitive advantage and core local strength in key markets. We’re proud of our work helping to expand and improve Canada’s infrastructure and transportation networks, and we’re ready to build the future of our country. We lead the infrastructure industry with purpose, and our people are at the heart of everything we do. Our business success relies on strong execution and continuous improvement – driven by the diversity, expertise and teamwork of our employees. We are always searching the globe for exceptional candidates to join the Aecon family and be a part of our forward-thinking, innovative, best-in-class organization!',
+                disciplines: ["Civil"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/afece45a-21ca-49af-a8e4-7198bed53784/Aecon+Logo+-+Christie+Lewington.jpg?format=1500w",
+                img_link: "https://www.aecon.com/",
+                linkedin: "https://ca.linkedin.com/company/aecon",
+                sizes: ["260px", "60px", "450px"],
+            },
+            {   name: "Associated Engineering",
+                description: 'Established in Edmonton more than 75 years ago, today Associated has over 1,000 staff in 21 offices across Canada.  We remain a uniquely Canadian, employee-owned consulting company.  We provide a broad range in services including planning, engineering, environmental science, landscape architecture, project management, and asset management.  Our projects include planning, studies, assessments, design, construction, training, and operational assistance.',
+                disciplines: ["Chemical", "Civil", "Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/173cb370-e858-4283-92b8-97a3042995ad/Associated_Engineering.jpg?format=300w",
+                img_link: "https://www.ae.ca/",
+                linkedin: "https://www.linkedin.com/company/associated-engineering/",
+                sizes: ["240px", "40px"],
+            },
+            {   name: "Aztec Engineering Inc.",
+                description: "Aztec Engineering Inc. is more than just a name or a logo. Our ability to meet and exceed our client’s expectations is one of our most valuable assets. It sets us apart from our competitors, attracts new customers and builds loyalty. This builds a meaningful connection with clients. It creates a common culture that talented people want to be part of. It is the driving force behind our success.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/329870fb-1125-4f72-a303-0d72fc64012a/Aztec+-+Gradient+with+White+BG+%5BJPEG+Format%5D+-+Brenda+M.jpg?format=300w",
+                img_link: "https://www.azeng.com/",
+                linkedin: "",
+                sizes: ["240px", "20px", "250px"],
+            },
+            {   name: "Bantrel",
+                description: "Bantrel is proud to be a leading provider of engineering, procurement, and construction (EPC) services in Canada. For nearly 40 years, we have delivered end-to-end solutions for some of Canada’s most challenging and complex energy projects, while consistently maintaining job safety, time management, and the highest degree of quality. In addition to having core business operations in energy and sustaining capital industries, Bantrel also provides EPC services to infrastructure and mining clients Canada-wide.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Environmental", "Mechanical", "Mining", "Petroleum", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4f748e61-fa56-48bf-a8b6-6c730e15fcda/open-graph-image.jpg?format=300w",
+                img_link: "https://www.bantrel.com/",
+                linkedin: "",
+                sizes: ["220px", "20px"],
+            },
+            {   name: "Barr Engineering",
+                description: "Barr is a consulting company that integrates engineering and environmental expertise to help clients develop, manage, process, and restore natural resources across North America and around the world. We have been employee owned since 1966 and trace our origins to the early 1900s. Today, we have over 900 employees across the U.S and Canada who work with clients in the mining, power, fuels, public, and manufacturing sectors, as well as attorneys, developers, and others with complex problems.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Environmental", "Mechanical", "Mining", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4a007dcc-2fcf-4c3f-ae67-7a53355d42f7/barr+logo.jfif?format=300w",
+                img_link: "https://www.barr.com/",
+                linkedin: "https://ca.linkedin.com/company/barr-engineering-co",
+                sizes: ["240px", "20px", "190px"],
+            },
+            {   name: "BBA Consulting",
+                description: "BBA has been providing a wide range of consulting engineering services for over 40 years. Today, its engineering, environmental and commissioning experts team up to quickly and accurately pinpoint the needs of industrial and institutional clients. The firm’s expertise is recognized in the Energy and Natural Resources industry. With 16 offices in Canada and internationally (Chile), offering clients local support and field presence, BBA is recognized for providing some of the industry’s most innovative, sustainable and reliable engineering solutions.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Materials", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/d2f7e891-a408-4bb4-a045-bc826f8dcaec/BBA_logo_Navy_RGB+-+Christelle+Martinez.png?format=300w",
+                img_link: "https://www.bba.ca/",
+                linkedin: "https://www.linkedin.com/company/bba_2",
+                sizes: ["240px", "20px", "260px"],
+            },
+            {   name: "Bird Construction",
+                description: "100 Years of Building Canada. <br> <br> Bird Construction has been providing construction services to a long list of new and repeat clients since 1920. We have now joined forces with Stuart Olson to further broaden our scope and service offering for clients including leading firms in the commercial, institutional, retail, multi-tenant residential, industrial, mining, water and wastewater, energy, renewables, nuclear, and civil sectors.",
+                disciplines: ["Civil", "Computer", "Electrical", "Mechanical", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4a6e5311-234e-409c-8fdd-4775cb936e4e/Bird_Construction_Inc__Bird_Construction_Inc__Announces_Award_Of.jpg?format=300w",
+                img_link: "https://www.bird.ca/",
+                linkedin: "",
+                sizes: ["240px", "30px"],
+            },
+            {   name: "Canadian Natural Resources Ltd.",
+                description: "Canadian Natural Resources Limited (Canadian Natural) is a senior independent crude oil and natural gas exploration, development and production company based in Calgary, Alberta, Canada. Our strong, diversified asset base is comprised of a balanced portfolio of light, synthetic, and heavy crude oil and natural gas. Canadian Natural operates in Canada, the United Kingdom and Offshore Africa.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Engineering Physics", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4ee20bf1-5b5c-4c19-a6bd-ba03d1b7e35a/Canadian+Natural_Color+-+Staicy+Alex.png?format=300w",
+                img_link: "https://www.cnrl.com/",
+                linkedin: "https://www.linkedin.com/company/cnrl/",
+                sizes: ["220px", "40px"],
+            },
+            {   name: "Capital Engineering",
+                description: "Capital Engineering is an Edmonton, Alberta based multi-discipline consulting engineering firm delivering exceptional project outcomes for our clients since 2004. Our home office team includes engineers, designers, project managers as well as project services and support personnel who offer safe, efficient and cost-effective solutions to our clients.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Materials", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/9f715e17-4276-4e27-b4d9-820e622890d7/CapitalEng_logo+-+Catherine+Taylor.jpg?format=300w",
+                img_link: "http://www.capitaleng.ca/",
+                linkedin: "https://www.linkedin.com/company/capital-engineering-partnership-/",
+                sizes: ["200px", "40px", "350px"],
+            },
+            {   name: "C-FER Technologies",
+                description: "C-FER works in partnership with the global energy industry to advance safety, environmental performance and efficiency. We provide full-scale testing and specialized engineering consulting services from our world-class facilities in Edmonton, Alberta, Canada. <br><br> C-FER works with industry to develop solutions to unique engineering challenges. This often requires in‑depth discussions with a client’s subject matter experts and the return to first principals engineering to understand their key issues. <br><br> As part of these activities, C-FER often develops novel analysis techniques and testing equipment which build on our past experience or forge new approaches that have never been tried before.",
+                disciplines: ["Civil", "Materials", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/0cbd8916-6e03-4d1a-83ba-26426ab78a31/A+Logo+-+cynthia+saruk.jpg?format=300w",
+                img_link: "https://www.cfertech.com/",
+                linkedin: "https://www.linkedin.com/company/c-fer-technologies/mycompany/verification/",
+                sizes: ["300px", "60px"],
+            },
+            {   name: "CIMA+",
+                description: "More than 30 years of know-how in engineering. <br><br> As a Canadian firm, property of its employees and operating locally across Canada, our greatest reward is the success of our people, business partners and clients. <br><br> Through our culture and open-mindedness, we innovate for the future. We work to create sustainable communities through an agile and multidisciplinary approach.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/1022bd18-cad6-46d8-8ba6-8d03bc1b7bcb/CIMA%2B.jpg?format=300w",
+                img_link: "https://www.cima.ca/en/",
+                linkedin: "https://ca.linkedin.com/company/cima-",
+                sizes: ["240px", "80px"],
+            },
+            {   name: "Clifton",
+                description: "Clifton is an award-winning engineering and environmental consultancy that combines our technical expertise with the ingenuity and pragmatism of our prairie roots to develop sustainable and cost-effective solutions for our clients. <br><br> We are one of the largest independent engineering firms in Western Canada. Our interdisciplinary teams provide innovative, best-value solutions to a range of challenges involving earth, water, and the physical environment. <br><br> We value people and are committed to the health and safety of all who are touched by the scope of our work. Our long-standing relationships with many significant clients is a testament to the quality of our work.",
+                disciplines: ["Civil", "Environmental", "Materials"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/f3cb891c-863b-4841-abc9-5bd9714cef82/Clifton-Logo-Primary-Blue+-+Cindy+Moench.jpg?format=300w",
+                img_link: "https://www.clifton.ca/",
+                linkedin: "https://ca.linkedin.com/company/clifton-engineering-group",
+                sizes: ["260px", "70px"],
+            },
+            {   name: "Cohesive",
+                description: "Staying connected. Sharing our knowledge. Always learning, we never let go of our pursuit for better. Let's build the future together. <br> In 2021, Ontracks joined forces with Cohesive, a wholly owned but independently operated business unit of Bentley Systems. We are a leading Global implementer of the Enterprise Asset Management system, IBM Maximo. We focus on delivering enterprise implementations and helping our clients realize tangible and sustainable operational improvements. <br> You can expect to work on complex challenges that will require technical skills to build enterprise-level solutions. This is an energetic company that gives you the opportunity to interact with all types of people who are looking to you to help solve problems.",
+                disciplines: ["Chemical", "Computer", "Electrical", "Engineering Physics", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/1ac870d9-ea98-4796-b37e-f519e9d888ab/1658756561315.jpg?format=300w",
+                img_link: "https://cohesivegroup.com/",
+                linkedin: "https://www.linkedin.com/company/cohesive-group/",
+                sizes: ["260px", "25px"],
+            },
+            {   name: "Colliers Project Leaders",
+                description: "Colliers Project Leaders. We’re not just project managers. <br> We go well beyond costs, schedules and project plans. We’ve led over 15,000+ projects that: <ul><li>Make cities livable. <li>Enhance workplaces. <li>Create spaces worth coming back to.<li>Improve patient care.<li>Deliver clean drinking water.<li>Build a sustainable future.<li>And so much more.</ul>We act for owners to drive value and performance in capital projects.<br>We share their vision and protect their interests so that they can be confident of success.",
+                disciplines: ["Civil", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/1bf70b0f-1f13-4987-ade1-a352d4a72bb1/ColliersProjectLeaders_logo_H_CMYK_5in_jpg+-+Jessica+Su.jpg?format=300w",
+                img_link: "https://www.colliersprojectleaders.com/",
+                linkedin: "https://www.linkedin.com/showcase/colliers-project-leaders-canada/",
+                sizes: ["300px", "100px"],
+            },
+            {   name: "Corrosion Service",
+                description: "Corrosion Service was founded in 1950 by Thomas R.B. Watson as the first Canadian firm to specialize in cathodic protection. Our founding philosophy was based on the principles of providing great customer service and developing a deep understanding of customer needs, these same core principles still guide our company today.<br><br>Service at our Core is the driving force that guides everything we do at Corrosion Service. As an engineering company we cannot hope to be successful unless we provide great customer service and develop a deep understanding of customer needs.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Environmental", "Materials", "Mechanical", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/fc9e1495-df50-4cd1-a3fd-237a5b5d7d6c/Corrosion_Service_Logo_CMYK_REV1+-+Brenden+Tanchuk.jpg?format=300w",
+                img_link: "https://corrosionservice.com/",
+                linkedin: "https://www.linkedin.com/company/corrosion-service-company-ltd/",
+                sizes: ["240px", "80px"],
+            },
+            {   name: "CSA Group",
+                description: "CSA Group is one of the largest standards development organizations in North America, conducting research and developing standards for a broad range of technologies and functional areas. CSA Group is also a global provider of testing, inspection and certification services for products in many market sectors, and a leader in safety and environmental certification for Canada and the U.S. <br><br> The CSA mark appears on billions of products worldwide. For more information about CSA Group, please visit www.csagroup.org.",
+                disciplines: ["Electrical", "Computer"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/b0d82957-5d3e-48e7-975a-c09ad1fe5318/CSA_Logo-Cerulean-TM+-+Rakshi+Mehta.PNG?format=300w",
+                img_link: "https://www.csagroup.org/",
+                linkedin: "",
+                sizes: ["200px", "30px"],
+            },
+            {   name: "De Havilland",
+                description: "",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/d0acd5f4-cc8d-48ad-b5b3-b0fe842e4fc4/news-dehavilland-logo.jpg?format=300w",
+                img_link: "https://dehavilland.com/en",
+                linkedin: "",
+                sizes: ["200px", "10px", "260px"],
+            },
+            {   name: "Deloitte",
+                description: "Whoever you are and where you're from, we want you to feel like you belong here. We bring together people with unique experiences and talents, and we are the place to develop a lasting network of friends, peers, and mentors. We are made up of professionals across Consulting, Financial and Risk Advisory, Audit & Assurance, Tax, Legal and more. Learn about the limitless opportunities and experiences that support your continuing growth at Deloitte. Student job postings will be live on our website on December 19: deloitte.ca/careers.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/62c624ec-b79a-415b-8354-c2be56f6cc92/DEL_PRI_RGB+-+Erin+B.jpg?format=300w",
+                img_link: "https://www2.deloitte.com/ca/en/pages/about-deloitte/articles/home.html",
+                linkedin: "",
+                sizes: ["200px", "40px"],
+            },
+            {   name: "Dow Canada",
+                description: "Dow combines one of the broadest technology sets in the industry with asset integration, focused innovation and global scale to achieve profitable growth and become the most innovative, customer centric, inclusive and sustainable materials science company. Dow's portfolio of performance materials, industrial intermediates and plastics business delivers a broad range of differentiated science-based products and solutions for our customers in high-growth segments, such as packaging, infrastructure and consumer care. Dow operates 113 manufacturing sites in 31 countries and employs approximately 37,000 people. Dow delivered pro forma sales of approximately $50 billion in 2018.",
+                disciplines: ["Chemical", "Materials", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/9590afcd-d51b-4e04-9984-737388180299/logo_dow+-+Sandra+Basaraba.jpg?format=300w",
+                mg_link: "https://ca.dow.com/en-ca.html",
+                linkedin: "",
+                sizes: ["220px", "50px"],
+            },
+            {   name: "EllisDon & PME",
+                description: "Construction is at our core. We're able to build anything from skyscrapers to subways, and from schools to hospitals. We have delivered projects under every type of contract model. Our construction experts utilize the latest technology and software to build your projects. For us, nothing is out of scope, and we're always up for a challenge.",
+                disciplines: ["Civil", "Electrical", "Mechanical", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/0432df9a-1c2e-47a1-95bd-e808ea25c731/PM_ED+Logo+-+50%25+smaller+-+Lisa+Anselmo.png?format=300w",
+                img_link: "https://www.ellisdon.com/",
+                linkedin: "https://www.linkedin.com/company/ellisdon/ ",
+                sizes: ["200px", "60px"],
+            },
+            {   name: "Encepta",
+                description: "Encepta was founded on a culture of embracing and making use of technology to change the way work is done. <br><br> We are a Canadian company composed of a hybrid of experience and innovative problem solvers and new grads with a customer-centric attitude. <br><br> Operating in the telecommunications outside plant contracting industry, Encepta offers end-to-end infrastructure planning, design, and data collection services, which unify network data for telecoms, utilities, and municipalities. <br><br> Our People are constantly working to build a company that combines great service with innovative technology and data to improve how utilities manage and enhance their distributed assets, to provide better communications, energy and transportation for their customers.",
+                disciplines: ["Civil", "Computer", "Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/b63215e5-4d7e-4eae-9c37-2e25c192fc17/Encepta+Logo+-+Black+-+Aline+Marques.png?format=300w",
+                img_link: "http://encepta.net",
+                linkedin: "https://www.linkedin.com/company/enceptacorp",
+                sizes: ["300px", "100px", "350px"],
+            },
+            {   name: "Engineered Air",
+                description: "Engineered Air is North America's leading manufacturer of made to order heating, ventilating, air conditioning, refrigeration and energy recovery equipment. Proven stability with over 50 years of steady growth through acquisitions and market expansion. Opportunities for internal growth and promotions. Customized in-house training program to suit experience and knowledge. Longstanding member of Best Managed Companies Program.",
+                disciplines: ["Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/5faed68d-1e7b-458a-bb19-e07719162d8c/Engineered+Air.jpg?format=300w",
+                img_link: "https://www.engineeredair.com/index.php/",
+                linkedin: "https://www.linkedin.com/company/engineered-air/?viewAsMember=true",
+                sizes: ["200px", "45px", "300px"],
+            },
+            {   name: "Englobe",
+                description: "Englobe is one of Canada’s premier firms specializing in professional engineering services, environmental sciences, and soil and biomass treatment. With offices located across Canada, the United Kingdom and France, we are conveniently located to support large and small scale projects, through different stages, in many sectors. Offering a range of value-added services that run the gamut from professional consulting services to turnkey project implementation, Englobe has developed a reputation for integrity, credibility, and people-centered values.",
+                disciplines: ["Civil", "Electrical", "Engineering Physics", "Environmental", "Materials", "Mechanical", "Mining", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/f50f8f73-ced8-448d-87e9-eb0e4a10bc32/Logo_ICMS-crop+-+Van+Par.jpg?format=300w",
+                img_link: "https://www.englobecorp.com/",
+                linkedin: "https://www.linkedin.com/company/englobecorp/",
+                sizes: ["220px", "30px", "300px"],
+            },
+            {   name: "Graham Construction",
+                description: "Graham is an employee-owned construction solutions partner that services the buildings, industrial, infrastructure, water and project finance sectors. We deliver lasting value for our clients through meticulous planning and scheduling, while upholding rigorous safety and quality standards. With offices throughout North America, our passionate and knowledgeable teams deliver projects that enable communities to thrive and people to live, work, move and grow in a rapidly changing world. With over nine decades of experience, Graham has the resources, capacity and expertise to undertake projects of every scope, scale and complexity.",
+                disciplines: ["Civil", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/7d9808a4-81c3-4737-a5c9-fdd3ecb10498/Graham+logo_col+-+Alyssa+Dudek.png?format=300w",
+                img_link: "https://grahambuilds.com/",
+                linkedin: "https://ca.linkedin.com/company/grahambuilds",
+                sizes: ["220px", "80px", "350px"],
+            },
+            {   name: "Inline Group",
+                description: "A Geotechnical Engineering, Materials Testing, And Surveying Firm with operations across Canada.",
+                disciplines: ["Civil", "Materials", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/8a0aa4da-4439-4f70-b23f-b2f6778151a2/Inline+logo+-+Nicole+I.jpg?format=300w",
+                img_link: "https://www.inlinegroupinc.ca/",
+                linkedin: "https://www.linkedin.com/company/inlinegroupinc/mycompany/?viewAsMember=true",
+                sizes: ["220px", "10px", "240px"],
+            },
+            {   name: "International Paper",
+                description: "International Paper is one of the world’s leading producers of fiber-based packaging and pulp. We improve people’s lives, the planet and our company’s performance by transforming renewable resources into products people depend on every day. Across our global footprint, we offer many programs and opportunities for both current students and new graduates to engage with us, learn from us and contribute their own ideas.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/05400864-2bc8-4699-af91-8bf2f7df540d/225px-International_Paper.svg.png?format=300w",
+                img_link: "https://www.internationalpaper.com/",
+                linkedin: "",
+                sizes: ["200px", "70px", "300px"],
+            },
+            {   name: "Kiewit",
+                description: "Kiewit is one of North America’s largest and most respected construction and engineering organizations. With its roots dating back to 1884, the employee-owned organization operates through a network of subsidiaries in the United States, Canada, and Mexico. Kiewit offers construction and engineering services in a variety of markets including transportation; oil, gas and chemical; power; building; water/wastewater; industrial; and mining. Kiewit had 2021 revenues of $12.1 billion and employs 28,800 staff and craft employees. Kiewit is ranked #3 in ENR’s list of Top 400 Contractors.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Materials", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/2f5acdef-eb32-4353-b6c9-542deb005639/Kiewit+logo+-+Abbie+Lucero.png?format=300w",
+                img_link: "http://www.kiewit.com",
+                linkedin: "https://www.linkedin.com/company/kiewit/mycompany/verification/?viewAsMember=true",
+                sizes: ["220px", "70px"],
+            },
+            {   name: "Klohn Crippen Berger",
+                description: "KCB is a leading engineering, geoscience and environmental consulting firm. What sets us apart? Our technical professionals thrive on problem solving and applying their technical knowhow to unique challenges. <br><br> We have confidence in our work because our solutions have stood the test of time, and our professionals work to define the standards by which our industry operates through their commitment to quality and best practices.",
+                disciplines: ["Civil", "Environmental", "Mining", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/6c55feaf-fa45-4916-b260-ff3e2ae08ea4/KCBL+Logo_symbol+-+Minja+Pyykonen.jpg?format=300w",
+                img_link: "http://www.klohn.com",
+                linkedin: "https://www.linkedin.com/company/klohn-crippen-berger/",
+                sizes: ["220px", "10px", "190px"],
+            },
+            {   name: "Krahn Group of Companies",
+                description: "The Krahn Group is a multi-disciplinary engineering firm encompassing Civil, Structural, Mechanical, and Electrical engineering disciplines to further benefit our clients and allow for a wholistic approach to the engineering and design process.",
+                disciplines: ["Civil", "Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/d243d080-12d6-45b2-9b56-0792f35feab9/Krahn+Logo+hi-res+-+Communications+CTA.PNG?format=300w",
+                img_link: "http://www.krahn.com",
+                linkedin: "https://www.linkedin.com/company/krahngroup/",
+                sizes: ["200px", "40px"],
+            },
+            {   name: "Lafarge",
+                description: "Lafarge is Canada's largest provider of sustainable construction materials and a member of the global group, Holcim. With 6,000 employees and 350 sites across Canada, our mission is to provide construction solutions that build better cities and communities. The cities where Canadians live, work, and raise their families along with the community’s infrastructure benefit from the solutions provided by Lafarge consisting of aggregates, asphalt and paving, cement, precast concrete, ready-mix concrete and road construction.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/387e8959-ff10-4cdb-8b8c-d34bc698baf2/Lafarge_Logo_RGB+-+Dyana+TAN.png?format=300w",
+                img_link: "http://www.lafarge.ca",
+                linkedin: "https://www.linkedin.com/company/lafargecanada/",
+                sizes: ["200px", "50px"],
+            },
+            {   name: "Louis Dreyfus Company Canada ULC",
+                description: "Founded in 1851, Louis Dreyfus Company is a leading merchant and processor of agricultural goods. <br><br> Our activities across a diversified range of business lines span the entire value chain, from origination to distribution, helping to feed and clothe up to 500 million people every year. <br><br> Our strong values, rich heritage, and clear vision for a safe and sustainable future guide us in our work to contribute to the global effort of providing sustenance for a growing population.<br><br>We are LDC.",
+                disciplines: ["Chemical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/b55a157b-b10b-4c33-9b24-75832900cb66/Louis-Dreyfus-Company-e1663883388571.jpg?format=300w",
+                img_link: "https://www.ldc.com/",
+                linkedin: "https://www.linkedin.com/company/louis-dreyfus-company/",
+                sizes: ["250px", "50px"],
+            },
+            {   name: "MEGlobal",
+                description: "MEGlobal is a wholly owned subsidiary of the EQUATE Petrochemical Company (EQUATE), which is part of the EQUATE Group. <br><br> MEGlobal is a fully integrated supplier of monoethylene glycol (MEG) and diethylene glycol (DEG), collectively known as ethylene glycol (EG). Customers around the world take advantage of our more than 70 years of global experience and expertise in the development, manufacturing, supply and marketing of EG.",
+                disciplines: ["Chemical", "Electrical", "Materials", "Mechanical", "ProcessControl"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/63bcd457-90e7-4083-8ba9-30d0ec59ed8a/MEGlobal-anEquateCompany+-+Sheri+MacLeod.jpg?format=300w",
+                img_link: "http://www.meglobal.biz",
+                linkedin: "https://www.linkedin.com/company/meglobal/",
+                sizes: ["200px", "50px"],
+            },
+            {   name: "Methanex",
+                description: "Methanex Corporation is the world’s largest producer and supplier of methanol to major international markets in North America, Asia Pacific, Europe and Latin America. Methanex is a Vancouver, Canada-based, publicly traded company with shares listed for trading on the Toronto Stock Exchange in Canada under the trading symbol 'MX'; on the NASDAQ Global Market in the United States under the trading symbol 'MEOH'. <br><br> Methanol, a liquid chemical produced primarily from natural gas, is used as a chemical feedstock in the manufacture of a range of consumer and industrial products, such as building materials, foams, resins, and plastics, as well as in the production of methyl tertiary-butyl ether; and energy applications.",
+                disciplines: ["Chemical", "Civil", "Engineering Physics", "Environmental", "Materials", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/0036b68c-3cd7-42f3-abd3-7abef761eb01/MEOH_original.png?format=300w",
+                img_link: "https://www.methanex.com/",
+                linkedin: "https://ca.linkedin.com/company/methanex-corporation",
+                sizes: ["270px", "70px"],
+            },
+            {   name: "Michels Canada",
+                description: "Michels Canada is committed to supporting Canada’s prosperous future by constructing safe, reliable infrastructure solutions to serve the public’s energy, water and wastewater, and transportation needs. <br><br> Our capabilities span from relining deteriorating sewer and water mains and utility maintenance holes in expanding metropolitan areas, to building tunnels for wastewater treatment plants under the most densely populated regions of Canada. We construct reliable pipelines and underground river crossings for the critical growing energy sector. Michels is well equipped to mobilize equipment and personnel to projects in highly urban and very remote locations across Canada.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/333f8f01-781f-40ea-a9ff-0c6282829e13/0271_637745673597713348.png?format=300w",
+                img_link: "https://www.michelscanada.com/",
+                linkedin: "",
+                sizes: ["240px", "30px"],
+            },
+            {   name: "MineSense Technologies ",
+                description: "MineSense is a pioneer in digital mining solutions, supplying real-time, sensor-based ore sorting for mines. Our signature solution is ShovelSense, a robust sensor installed on mining equipment to scan and estimate the grade of the material in every shovel and bucket. Our BeltSense technology is used on conveyance at different points of the mine’s downstream operations. Used sequentially, BeltSense and ShovelSense will maximize ore and waste control and downstream processing value.",
+                disciplines: ["Computer", "Electrical", "Engineering Physics", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/2ceec93f-b598-43f9-8100-bb65bfb0d40d/Minesense+logo+large+%284%29+-+Krystal+Chan.jpg?format=300w",
+                img_link: "https://minesense.com/",
+                linkedin: "https://www.linkedin.com/company/minesense-technologies-ltd-/",
+                sizes: ["240px", "10px"],
+            },
+            {   name: "MPE Engineering",
+                description: "MPE Engineering Ltd. is an professional engineering consulting firm with offices located in Alberta, Saskatchewan, Manitoba and British Columbia. <br><br> We offer a full-service, multi-disciplinary engineering team in the municipal, water resources and building services sectors. This allows our clients to benefit from the flexibility and efficiency of a complete in-house engineering team. Our company culture focuses on providing exceptional service through open collaboration and communication, which allows us to meet our clients' needs in an innovative, practical and cost-effective manner.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Mechanical", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/ac4b758e-a1d3-492a-9a3d-23f2705ccdc7/Englobe_Logo_MPE_CMYK-AnEnglobeCompany-01+-+Mike+Andrews.jpg?format=300w",
+                img_link: "https://www.mpe.ca/",
+                linkedin: "https://www.linkedin.com/company/mpe-engineering-ltd./mycompany/",
+                sizes: ["240px", "20px"],
+            },
+            {   name: "North American Construction Group",
+                description: "With over 65 years of experience, NACG has the expertise to provide a comprehensive and integrated approach to meet our customer’s requirements from consultation to completion – a distinct advantage that few contractors can rival. NACG is committed to safety and success in the heavy construction and mining industry. <br><br> We offer positions on the front line, operating some of the largest equipment in the world, to professional roles in our corporate office. Bring your experience and be part of a team that is strong, hard working and committed to being successful while operating safely.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/7c692145-3b50-4866-854b-284e860eea20/nacgHeaderlogo.png?format=300w",
+                img_link: "http://www.nacg.ca",
+                linkedin: "https://www.linkedin.com/company/119654",
+                sizes: ["250px", "80px"],
+            },
+            {   name: "NRC-NANO",
+                description: "We cultivate nanoscience platforms that lead to revolutionary technologies and applications to enhance human health, the environment and society's technological future. In the pursuit of innovation and advancement, we strategically draw upon foundational expertise across science disciplines such as chemistry, biology, physics, material science, and engineering. We advance Canadian innovations by deploying cutting-edge nanoscience, developing expert microscopy capabilities, and by establishing and leveraging national and international collaborations and partnerships.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/ab6d2d34-bfb6-4da8-86aa-8ad723c55bca/NRC+logo+-+Mark+Salomons.jfif?format=300w",
+                img_link: "https://nrc.canada.ca/en/research-development/research-collaboration/research-centres/nanotechnology-research-centre",
+                linkedin: "https://www.linkedin.com/company/national-research-council/mycompany/verification/",
+                sizes: ["240px", "40px"],
+            },
+            {   name: "Ovintiv",
+                description: "Ovintiv is a leading North American energy producer focused on developing its multi-basin portfolio of oil, natural gas liquids and natural gas producing plays. We have large and contiguous acreage positions in North America’s top resource plays where we deliver unmatched value through continuous innovation. As one of the largest producers of oil, condensate, natural gas and natural gas liquids in North America, our team stands united by a commitment to drive progress and improve lives with respect and responsibility, not just in the communities where we operate, but for everyone. Our products fuel the world — we make modern life possible",
+                disciplines: ["Chemical", "Environmental", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/ff0ceda4-9d4c-4597-912c-33bb66e768de/Ovintiv_tm_h_rgb+%28full+color+horizontal%29+-+Jennifer+Rodriguez.png?format=300w",
+                img_link: "http://www.ovintiv.com",
+                linkedin: "https://www.linkedin.com/company/ovintiv/",
+                sizes: ["240px", "60px"],
+            },
+            {   name: "Owens Corning",
+                description: "We are proud to be a global building and industrial materials leader. Our three integrated businesses are dedicated to the manufacture and advancement of a broad range of insulation, roofing and fiberglass composite materials. Leveraging the talents of 19,000 employees in 33 countries, Owens Corning provides innovative products, manufacturing technologies, and sustainable solutions that address energy efficiency, product safety, renewable energy, durable infrastructure, and labor productivity. These solutions provide a material difference to the company’s customers and make the world a better place.",
+                disciplines: ["Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/542c423f-c2af-4d7e-8eec-8a844239c642/1200px-Owens_Corning_logo.svg.png?format=300w",
+                img_link: "https://www.owenscorning.com/en-ca",
+                linkedin: "",
+                sizes: ["240px", "20px", "200px"],
+            },
+            {   name: "PCL Construction",
+                description: "",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/5d3f77bb-5a4d-42e3-aeca-571ad09ba244/PCL_Const_Logo_CB.png?format=300w",
+                img_link: "https://www.pcl.com/ca/en",
+                linkedin: "",
+                sizes: ["240px", "15px", "250px"],
+            },
+            {   name: "Peloton",
+                description: "THE PELOTON PLATFORM PROVIDES INDUSTRY-LEADING OIL & GAS SOFTWARE SOLUTIONS. <br><br> Accessible anywhere, anytime, the SaaS-based Peloton Platform allows oil and gas operators to view and manage vital operational data across three solution areas integrated into one fully hosted platform. Developed in partnership with Microsoft's Azure technology, this customizable platform delivers a seamless user experience to help organizations achieve maximum value from Well Data Lifecycle, Production Data Lifecycle, and Land Data Management solutions.",
+                disciplines: ["Chemical", "Computer", "Electrical", "Materials", 'Mechanical', "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4c65019b-a43e-435c-8be6-088a69cb0bbb/logo.png?format=300w",
+                img_link: "https://www.peloton.com/",
+                linkedin: "",
+                sizes: ["240px", "40px"],
+            },
+            {   name: "PepsiCo Foods Canada",
+                description: "",
+                disciplines: ["Chemical", "Environmental", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/731581f3-29ab-41fc-88fc-1ccbc6ecfbd5/PepsicoCanLogoTrain+-+Ashley+Roen.jpg?format=300w",
+                img_link: "http://www.pepsico.ca",
+                linkedin: "https://www.linkedin.com/company/pepsico",
+                sizes: ["240px", "50px"],
+            },
+            {   name: "Primary Engineering and Construction",
+                description: "For over 19 years, Primary has been an engineering and construction leader specializing in electric utility distribution, transmission, telecommunication, substation, lighting, traffic signalization design and construction. We provide design, construction, and Turnkey/Design-Build options for clients including electric utility companies, developers, municipalities, builders, commercial and industrial businesses, energy companies, and private contractors. <br><br> We partner with our clients to provide quality, tailored, and complete electrical engineering and communications distribution solutions that instill confidence, build trust, and allow you to achieve your goals.",
+                disciplines: ["Electrical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/4dc24798-71d2-4081-867a-24adb8df2c85/Primary-Engineering--Construction-logo+-+Donna+Geddam.jpg?format=300w",
+                img_link: "https://primaryeng.com/",
+                linkedin: "https://www.linkedin.com/company/primary-engineering-and-construction/mycompany/",
+                sizes: ["240px", "65px", "400px"],
+            },
+            {   name: "Rising Edge",
+                description: "Rising Edge Group is a high voltage electrical contractor providing safe, cost-effective, and fit-for-purpose project solutions to the power industry. Since our inception in 2002, Rising Edge has grown to provide a wide array of high voltage electrical services in the power, transmission, distribution, industrial, and renewables sectors. From conceptual design to commissioning, each aspect of your project is handled by trained industry specialists resulting in a product that is complete, on-time, and on-budget.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Materials"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/1d7e3f8e-073a-4157-9ece-d767fddf9055/rising+edge.png?format=300w",
+                img_link: "https://risingedgegroup.com/",
+                linkedin: "",
+                sizes: ["240px", "70px"],
+            },
+            {   name: "Roterra Piling",
+                description: "Roterra Piling is a progressive organization that designs, manufactures, and installs piling foundations across North America for any industry requiring foundations. We pride ourselves in our facilities, equipment and people. Our portfolio of services include pile engineering, load testing, helical (screw) piling, driven piling, concrete piling and shoring. <br><br> Roterra Piling’s team of engineers, tradesman, and installers provide our clients of any size with a turn-key solution for any foundation project. From several to several thousand piles, we are willing and able to work on any project. We take pride in our product and service and through continual improvement aim to achieve our goal of being the very best at what we do.",
+                disciplines: ["Civil", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/8f815244-780a-42e2-9c0e-c510b82d7809/dcea07_fd754b35c9de44a0a35cfe60c3e27aec+%281%29+-+Rebecca+Charron.png?format=300w",
+                img_link: "https://www.roterra.com/",
+                linkedin: "https://www.linkedin.com/company/roterra-screw-piling/",
+                sizes: ["250px", "70px"],
+            },
+            {   name: "Spartan Controls",
+                description: "Experience industrial innovation at Spartan Controls—the recognized leading provider of industrial automation solutions in Western Canada. For over 59 years, Spartan has provided customers with high performance solutions, industry expertise, lifecycle support, and technical training—delivering value our customers want. <br><br> Our automation solutions are used in all process industries including oil and gas, oil sands, mining, chemical, pulp and paper, power, pipeline, and municipal. We are dedicated to creating a sustainable modern world and providing exceptional customer experiences where expertise and collaboration come together.",
+                disciplines: ["Chemical", "Electrical", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/af59a071-f19c-4fff-a053-5c792bbf0047/Spartan+Logo3+-+Danielle+Williams.jpg?format=300w",
+                img_link: "https://www.spartancontrols.com/",
+                linkedin: "",
+                sizes: ["240px", "60px"],
+            },
+            {   name: "Schlumberger (SLB)",
+                description: "We are Schlumberger, the leading global provider of technology and services to the energy industry. <br><br> We specialize in reservoir characterization, well construction, and accelerating reservoir production and offer the most comprehensive range of products and services in the industry. <br><br>The solutions we offer aim to push the technical limits of our industry. We hire the most-driven minds in engineering, science, technology development, and commercial roles to do that. <br><br>We’ll support you with world-leading learning and development, a meritocratic culture, and offer borderless careers that ensure you build skills by continually taking on challenging work. <br><br> If you want to help shape the future of energy, then this is the place for you.",
+                disciplines: ["Chemical", "Computer", "Electrical", "Environmental", "Mechanical", "Mining", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/93a97c81-9fcc-46f7-926a-89a13541ef49/SLB_Logo_2022.svg.png?format=300w",
+                img_link: "https://www.slb.com/",
+                linkedin: "",
+                sizes: ["300px", "40px"],
+            },
+            {   name: "Sherritt International",
+                description: "Headquartered in Toronto, Sherritt is a world leader in using hydrometallurgical processes to mine and refine nickel and cobalt – metals essential for an electric future. Its Technologies Group creates innovative, proprietary solutions for natural resource- based industries around the world to improve environmental performance and increase economic value. <br><br> Sherritt has embarked on a multi-pronged growth strategy focused on expanding nickel and cobalt production by up to 20% from 2021 and extending the life of mine at Moa beyond 2040. The Corporation is also the largest independent energy producer in Cuba. Sherritt’s common shares are listed on the Toronto Stock Exchange under the symbol “S”.",
+                disciplines: ["Chemical", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/02bc8f51-d7e0-4059-970e-3be5343d1710/sherritt.png?format=300w",
+                img_link: "https://www.sherritt.com/English/Home/default.aspx",
+                linkedin: "https://ca.linkedin.com/company/sherritt-international",
+                sizes: ["250px", "40px"],
+            },
+            {   name: "Stantec",
+                description: "Design with community in mind. <br><br> We care about the communities we serve—because they're our communities too. We're designers, engineers, scientists, and project managers, innovating together at the intersection of community, creativity, and client relationships.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/6f64a25d-11a7-4b0d-a7a2-c864cdb9388e/Stantec+Logo+-+Kat+Hood.jpg?format=300w",
+                img_link: "https://www.slb.com/",
+                linkedin: "",
+                sizes: ["240px", "80px"],
+            },
+            {   name: "Strathcona Resources",
+                description: "Strathcona Resources Ltd. is one of the largest private-equity owned energy companies in North America. Focused on thermal oil, enhanced oil recovery and condensate-rich Montney, our operations are located in the Cold Lake oil sands region of Alberta, the Lloydminster and North Battleford heavy oil region, and the Montney natural gas basin spanning west central Alberta and NE British Columbia. At our core is our people, essential to Strathcona’s high productivity and culture in which we live our values, encourage curiosity, and support personal growth. We are committed to maintaining our high standard of safety, operational and environmental performance while being positively involved in the communities where we live and work.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/d642a928-a978-4171-9202-c591ab4ce1b5/Strathcona+-+Courtney+Bennett.png?format=300w",
+                img_link: "https://www.strathconaresources.com/",
+                linkedin: "https://www.linkedin.com/company/strathcona-resources-ltd/mycompany/",
+                sizes: ["260px", "60px"],
+            },
+            {   name: "Teck Resources",
+                description: "Teck is one of Canada’s leading mining companies, committed to responsible mining and mineral development with major business units focused on copper, zinc, and steelmaking coal, as well as investments in energy assets. <br><br> Copper, zinc and high-quality steelmaking coal are required for the transition to a low-carbon world.",
+                disciplines: ["Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/72abc21d-c9c7-422e-ac74-6ad74ab6e8c1/Teck-logo-square_400x400.png?format=300w",
+                img_link: "https://www.teck.com/",
+                linkedin: "https://www.linkedin.com/company/teck-resources-limited/mycompany/verification/",
+                sizes: ["240px", "10px", "220px"],
+            },
+            {   name: "TELUS",
+                description: "TELUS’ Graduate Technology Leadership Program (GTLP) is a one-of-a-kind technical development program for new grads in engineering and technology. With our talented team members as your mentors, and with a keen focus on cutting-edge technology and innovation, you can help us build Canada’s digital future. <br><br> Now running for more than two decades, the GTLP has seen numerous engineering and technology grads launch successful careers at TELUS in both technical and leadership roles. Rotations across five distinct technology career streams will expose you to a breadth of experience with delivering on the needs of our customers, all while benefiting from the invaluable insights of accomplished leaders from across the organization.",
+                disciplines: ["Chemical", "Computer", "Electrical", "Environmental", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/b442ba01-02da-4944-a386-ccfc700f0358/1200px-Telus_logo.svg.png?format=300w",
+                img_link: "https://www.telus.com/en/",
+                linkedin: "https://ca.linkedin.com/company/telus-gtlp",
+                sizes: ["280px", "80px", "350px"],
+            },
+            {   name: "Tetra Tech Canada Inc.",
+                description: "Tetra Tech is a leading, global provider of consulting and engineering services. We are differentiated by Leading with Science® to provide innovative technical solutions to our clients. We support global commercial and government clients focused on water, environment, sustainable infrastructure, renewable energy, and international development. With more than 21,000 associates worldwide, Tetra Tech provides clear solutions to complex problems.",
+                disciplines: ["Civil", "Computer", "Environmental", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/a626e51b-0603-432d-a85a-0275d7676d6c/Tt-Logo-Horizontal+-+Amanda+Paquette.png?format=300w",
+                img_link: "http://www.tetratech.com",
+                linkedin: "https://www.linkedin.com/company/tetra-tech/",
+                sizes: ["240px", "60px"],
+            },
+            {   name: "Thurber Engineering Ltd.",
+                description: "Thurber provides geotechnical, environmental and construction materials engineering and testing services for a variety of industries across Canada. Our multidisciplinary expertise allows us to work on problems related to earth, the environment and construction materials. Each of our offices specializes in serving its regional environment and has the professional skills and laboratory facilities to accommodate the local conditions.",
+                disciplines: ["Civil", "Environmental"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/9970b089-5b68-4826-bd72-18e1a9a445a5/THURBER_horizontal+CMYK+-+Darcy+Proudfoot.jpg?format=300w",
+                img_link: "http://thurber.ca",
+                linkedin: "https://www.linkedin.com/company/thurbereng/",
+                sizes: ["240px", "60px"],
+            },
+            {   name: "Trane Technologies",
+                description: "At Trane Technologies, we see a better tomorrow and we boldly go. <br> Our people around the world are connected by one purpose: to boldly challenge what’s possible for a sustainable world. To do that, we need big ideas and bold action from passionate, pioneering people like you. <br><br> We uplift our communities and make an impact towards a better, stronger planet. We do the same when it comes to helping you thrive at work and home, through meaningful benefits and compensation, flexibility, and opportunities for real growth. <br><br> Today, we’re changing the industry. Tomorrow, the course of climate history. <br> We boldly go.",
+                disciplines: ["Civil", "Computer", "Electrical", "Environmental", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/53fbbb3d-e1c1-42b7-a815-b8451747b53e/Rectangle+600x150+-+Nicole+Blanco.jpg?format=300w",
+                img_link: "https://careers.tranetechnologies.com/global/en/studentandgraduates",
+                linkedin: "https://www.linkedin.com/company/tranetechnologies",
+                sizes: ["290px", "80px", "350px"],
+            },
+            {   name: "Urban Systems",
+                description: "We’re a professional consulting firm committed to supporting vibrant communities. We pride ourselves on building communities that are safe, sustainable and prosperous.",
+                disciplines: ["Civil", "Environmental", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/82108d5f-1155-4adb-ad4a-552291e79db4/Urban+Systems+-+Primary+Logo+-+Colour+-+CLEAR+-+Ana+Radmanovic.png?format=300w",
+                img_link: "https://urbansystems.ca/",
+                linkedin: "https://www.linkedin.com/company/urban-systems-ltd-/",
+                sizes: ["200px", "40px"],
+            },
+            {   name: "Volker Stevin Highways - Bridges",
+                description: "Volker Stevin Highways Ltd. is a well-established General Contractor, with a wealth of experience in completing transportation infrastructure projects in Alberta. We are experts in bridge and highway construction and maintenance. Over the past decade, we have developed an industry leading bridge construction division that has continued to grow year-over-year. 2022 was a banner year for our team. In the SLC girder category alone, we built four (4) beautiful bridges: a 46.0m long bridge over the Raven River, a bridge carrying Glenmore Trail over the WID Canal, and two (2) bridges built simultaneously on Highway 22 (pilot project with Alberta Transportation comparing concrete with GU and GUL cement).",
+                disciplines: ["Civil", "Environmental", "Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/5368efe9-6b52-4eec-a1ed-c61ba052d495/efe2657c-a657-44ae-9875-247abe8b0c6b+-+Carter+Lautner.png?format=300w",
+                img_link: "http://vshighways.ca",
+                linkedin: "",
+                sizes: ["200px", "60px", "350px"],
+            },
+            {   name: "Weatherford Canada",
+                description: "Weatherford delivers innovative energy services that integrate proven technologies with advanced digitalization to create sustainable offerings for maximized value and return on investment. Our world-class experts partner with customers to optimize their resources and realize the full potential of their assets. Operators choose us for strategic solutions that add efficiency, flexibility, and responsibility to any energy operation.",
+                disciplines: ["Chemical", "Electrical", "Mechanical", "Petroleum"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/2719beee-c300-4087-b3f4-66676c346b53/Weatherford.png?format=300w",
+                img_link: "http://www.weatherford.com",
+                linkedin: "https://www.linkedin.com/company/weatherford/",
+                sizes: ["200px", "30px"],
+            },
+            {   name: "Westmoreland (Coal Valley Mine)",
+                description: "Westmoreland is a leading company in coal mining across North America.",
+                disciplines: ["Civil", "Environmental", "Mining", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/ee4e308f-375d-4ea9-bd51-207a1f44c926/Westmoreland.png?format=300w",
+                img_link: "https://westmoreland.jobs.net/",
+                linkedin: "",
+                sizes: ["200px", "60px", "400px"],
+            },
+            {   name: "Westpower",
+                description: "Westpower was founded in 1993 and has four Alberta locations (Grande Prairie, Edmonton, Calgary) and one in Salt Lake City, Utah. Westpower specializes in: custom design manufacturing and maintenance of engineered pumps, Royal Purple lubricants and a broad range of reliability products, IMPACT-n nano coating services, part and repair services and field optimization. <br><br> Westpower is renowned for our ability to find cost-effective solutions for the toughest pump applications. We overhaul all styles of engineered and industrial pumps; investigate, understand and improve machinery through root cause failure analysis and engineered design enhancements.",
+                disciplines: ["Mechanical"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/1d53c8fb-68a1-446b-a9d9-024415996851/WP-Wordmark-RGB-600DPI+-+Lauren+Mazuryk.png?format=300w",
+                img_link: "https://westpowergroup.com/",
+                linkedin: "https://www.linkedin.com/company/westpower/",
+                sizes: ["240px", "90px", "400px"],
+            },
+            {   name: "Wood Canada Limited",
+                description: "Wood is a global leader in consulting and engineering across energy and the built environment, helping to unlock solutions to some of the world’s most critical challenges. We provide consulting, projects and operations solutions in more than 60 countries, employing around 40,000 people.",
+                disciplines: ["Chemical", "Civil", "Electrical", "Mechanical", "Petroleum", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/b39d7fb8-564b-4742-b716-1a998205b312/HighRes_Logo+-+Anne+Elliott.png?format=300w",
+                img_link: "https://www.woodplc.com",
+                linkedin: "https://www.linkedin.com/company/woodplc",
+                sizes: ["200px", "50px"],
+            },
+            {   name: "WSP",
+                description: "WSP develops creative, comprehensive and sustainable engineering solutions for a future where society can thrive. Equipped with an intimate understanding of local intricacies, world-class talent and proactive leadership, we plan, design, manage and engineer long lasting and impactful solutions to uniquely complex problems.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/v1/5ea4d3f4c5cdad5a2eb79812/0d2676a8-6a69-43c6-9c65-26b64eaa3dfc/wsp_logo_red.jpg?format=300w",
+                img_link: "https://www.wsp.com/en-ca",
+                linkedin: "",
+                sizes: ["200px", "5px", "280px"],
+            }
+            ]
+        // List of Disciplines "Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"
+
+        function display_elements(dict) {
+            if (FILTER == 'All') {
+                dict.forEach(company => {
+                    // console.log(company);
+                    document.getElementById("companies-container").innerHTML += get_html_element(company);
+                });
+            } else {
+                dict.forEach(company => {
+                    if (company.disciplines.includes(FILTER)) {
+                        document.getElementById("companies-container").innerHTML += get_html_element(company);
+                    };
+                });
+            };
+        };
+
+        function get_html_element(comp) {
+            let disc_name = comp.disciplines[0];
+            for (i = 1; i < comp.disciplines.length; i++) {
+                disc_name += ", " + comp.disciplines[i]
+            }
+            innertext = `${comp.description}</p><p>Disciplines: ${disc_name.trim()}</p></p>`;
+            // Remove the Linkedin Link if the company provides no Linkedin
+            let linkedin_text = '';
+            if (comp.linkedin != "") {
+                linkedin_text = `<a target="_blank" href=${comp.linkedin}>Linkedin</a>`;
+            }
+            return `<div class="container", id="container"><div class="gallery-image" style=height:${comp.sizes[0]}><div class="text">${innertext}${linkedin_text}</div>
+                <img src="${comp.img_src}" style="margin-top:${comp.sizes[1]}; "width=${comp.sizes[2]}" class="img" alt="${comp.name}"></div></div><h3 class="img-description">
+                <a class="img-text" target="_blank" href="${comp.img_link}">${comp.name}</a></h3><hr class="company-separator">`;
+        };
+
+        BUTTONS.forEach(button => {
+            button.addEventListener('click', () => {
+                // Change Previous FILTER to Black and Update New FILTER and Color
+                document.getElementById(FILTER).style.color = "black";
+                document.getElementById(FILTER).style.fontWeight = "400";
+                FILTER = button.getAttribute('data-filter');
+                document.getElementById(FILTER).style.color = "rgb(0, 73, 144)";
+                document.getElementById(FILTER).style.fontWeight = "700";
+                console.log(FILTER)
+                document.getElementById("companies-container").innerHTML = '';
+                display_elements(companies);
+            });
+        });
+
+        display_elements(companies);
+    </script>
+    <style>
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 168px;
+            padding: 0px 0px 10px 0px;
+        }
+
+        /* Dropdown Button */
+        .dropbtn {
+            background-color: rgb(0, 73, 144);
+            color: white;
+            padding: 10px 15px;
+            margin: 0px;
+            font-size: 16px;
+            border: none;
+            text-align: center;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {
+            background-color: rgb(0, 60, 120);
+        }
+
+        .discipline-btn {
+            padding: 5px;
+            width: 100%;
+            text-align: left;
+            border: none;
+        }
+
+        /* company stuff */
+        .container {
+            margin: auto;
+            border-radius: 20px;
+        }
+
+        .gallery-image {
+            /* border: 2px solid green; */
+            position: relative;
+            text-align: center;
+            height: 100%;
+            margin: auto;
+            background-color: white;
+            border-radius: 20px;
+        }
+
+        .container img {
+            /* border: 1px solid black; */
+            max-width: 100%;
+            opacity: 1;
+            transition: .6s ease;
+        }
+
+        .img-description {
+            text-align: center;
+        }
+
+        .img-description:hover,
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .img-text {
+            color: black;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+        }
+
+        .text {
+            /* display:none; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            line-height: auto;
+            height: 100%;
+            background-color: white;
+            border-radius: 16px;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: .6s ease;
+            border: 1px solid;
+            text-align: left;
+            padding: 6px 10px 0px 10px;
+            font-size: 14px;
+            line-height: 18px;
+            font-family: 'Noto Sans Georgian', sans-serif;
+            /* font-family: 'Roboto', sans-serif; meh*/
+            /* font-family: 'Noto Sans JP', sans-serif; meh *
+            /* font-family: 'Source Sans Pro', sans-serif; pretty g*/
+        }
+
+        .text:hover {
+            opacity: 1;
+        }
+
+        .overall-wrapping {
+            padding: 10px;
+            width: 70%;
+            margin: auto
+        }
+
+        #All {
+            /* Initialize the All Discipline btn to correct color */
+            color: rgb(0, 73, 144);
+            font-weight: 700;
+        }
+
+        @media only screen and (max-width:800px) {
+            .overall-wrapping {
+                padding: 10px;
+                width: 80%;
+                margin: auto
+            }
+
+            .img {
+                max-height: 400px;
+                object-fit: cover;
+            }
+
+            .gallery-image {
+                width: 100%;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .text {
+                font-size: 12px;
+                line-height: 12px;
+            }
+        }
+
+        @media only screen and (min-width:800px) {
+            .gallery-image {
+                width: 100%;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .text {
+                font-size: 13px;
+                line-height: 14px;
+            }
+        }
+
+        @media only screen and (min-width:1400px) {
+            .gallery-image {
+                width: 80%;
+            }
+
+            .container {
+                width: 80%;
+            }
+
+            .company-separator {
+                width: 950px;
+                margin: auto;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
