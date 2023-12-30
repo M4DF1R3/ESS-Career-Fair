@@ -8,7 +8,7 @@
             <div class="dropdown">
                 <p class="dropbtn">Filter by Discipline</p>
                 <div class="dropdown-content">
-                    <button class="discipline-btn" id="All" data-filter="All"> Show all</button>
+                    <button class="discipline-btn" id="filter-All" data-filter="filter-All"> Show all</button>
                     <button class="discipline-btn" id="Chemical" data-filter="Chemical"> Chemical</button>
                     <button class="discipline-btn" id="Civil" data-filter="Civil"> Civil</button>
                     <button class="discipline-btn" id="Computer" data-filter="Computer"> Computer</button>
@@ -24,13 +24,24 @@
                         Students</button>
                 </div>
             </div>
+            <div class="dropdown">
+                <p class="dropbtn">Filter by Date</p>
+                <div class="dropdown-content">
+                    <button class="date-btn" id="date-All" data-filter="date-All"> Show all</button>
+                    <button class="date-btn" id="Jan9" data-filter="Jan9"> January 9th, 2024</button>
+                    <button class="date-btn" id="Jan10" data-filter="Jan10"> January 10th, 2024</button>
+                    <button class="date-btn" id="Jan11" data-filter="Jan11"> January 11th, 2024</button>
+                </div>
+            </div>
 
             <div id="companies-container"></div>
         </div>
     </head>
     <script>
         const BUTTONS = document.querySelectorAll('.discipline-btn');
-        let FILTER = 'All';
+        const DATE_BUTTONS = document.querySelectorAll('.date-btn');
+        let FILTER = 'filter-All';
+        let DATE_FILTER = 'date-All';
         // sizes:['Height of gallary-image' Used Sizing(200-300), 'Margin of the Image to Move Down By', 'Size of Image']
         const companies =
             [{  name: "Aecon",
@@ -40,6 +51,7 @@
                 img_link: "https://www.aecon.com/",
                 linkedin: "https://www.linkedin.com/company/aecon/?originalSubdomain=ca",
                 sizes: ["200px", "30px", "450px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "Allnorth Consultants",
@@ -49,6 +61,7 @@
                 img_link: "http://Allnorth.com",
                 linkedin: "https://www.linkedin.com/company/allnorth-consultants-limited/mycompany/",
                 sizes: ["200px", "20px"],
+                present_date: ['Jan10'],
             },
             {
                 name: "AltaLink",
@@ -58,6 +71,7 @@
                 img_link: "http://www.altalink.ca",
                 linkedin: "https://www.linkedin.com/company/altalink/mycompany/",
                 sizes: ["240px", "70px", "500px"],
+                present_date: ['Jan10'],
             },
             {   name: "Associated Engineering",
                 description: 'Established in Edmonton more than 75 years ago, today Associated has over 1,000 staff in 21 offices across Canada.  We remain a uniquely Canadian, employee-owned consulting company.  We provide a broad range in services including planning, engineering, environmental science, landscape architecture, project management, and asset management.  Our projects include planning, studies, assessments, design, construction, training, and operational assistance.',
@@ -66,6 +80,7 @@
                 img_link: "https://www.ae.ca/",
                 linkedin: "https://www.linkedin.com/company/associated-engineering/",
                 sizes: ["240px", "40px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "ATCO",
@@ -75,6 +90,7 @@
                 img_link: "https://www.atco.com/en-ca.html",
                 linkedin: "https://www.linkedin.com/company/atco-group/",
                 sizes: ["220px", "45px", "400px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "Bantrel",
                 description: "Bantrel is proud to be a leading provider of engineering, procurement, and construction (EPC) services in Canada. For nearly 40 years, we have delivered end-to-end solutions for some of Canada’s most challenging and complex energy projects, while consistently maintaining job safety, time management, and the highest degree of quality. In addition to having core business operations in energy and sustaining capital industries, Bantrel also provides EPC services to infrastructure and mining clients Canada-wide.",
@@ -83,6 +99,7 @@
                 img_link: "https://www.bantrel.com/",
                 linkedin: "https://www.linkedin.com/company/bantrel/",
                 sizes: ["200px", "10px"],
+                present_date: ['Jan9'],
             },
             {   name: "Barr Engineering",
                 description: "Barr is a consulting company that integrates engineering and environmental expertise to help clients develop, manage, process, and restore natural resources across North America and around the world. We have been employee owned since 1966 and trace our origins to the early 1900s. Today, we have over 1,000 employees across the U.S and Canada who work with clients in the mining, power, fuels, public, and manufacturing sectors, as well as attorneys, developers, and others with complex problems. Please visit www.barr.com/careers to view a full listing of our available positions and to apply online.",
@@ -91,6 +108,7 @@
                 img_link: "https://www.barr.com/",
                 linkedin: "https://ca.linkedin.com/company/barr-engineering-co",
                 sizes: ["200px", "5px", "190px"],
+                present_date: ['Jan9'],
             },
             {   name: "Bird Construction",
                 description: "Bird Construction has been providing construction services to a long list of new and repeat clients since 1920. We have now joined forces with Stuart Olson to further broaden our scope and service offering for clients including leading firms in the commercial, institutional, retail, multi-tenant residential, industrial, mining, water and wastewater, energy, renewables, nuclear, and civil sectors.",
@@ -99,6 +117,7 @@
                 img_link: "https://www.bird.ca/",
                 linkedin: "https://www.linkedin.com/company/bird-construction/",
                 sizes: ["200px", "10px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "Calian Group",
@@ -108,6 +127,7 @@
                 img_link: "https://www.calian.com/",
                 linkedin: "https://www.linkedin.com/company/calian/",
                 sizes: ["200px", "30px", "400px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "Canada Pump and Power",
@@ -117,6 +137,7 @@
                 img_link: "http://canadapumpandpower.com",
                 linkedin: "https://ca.linkedin.com/company/canada-pump-power",
                 sizes: ["200px", "20px", "700px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "Canadian Natural Resources Ltd.",
                 description: "Canadian Natural is a senior oil and natural gas production company, with continuing operations in its core areas located in Western Canada, the U.K. portion of the North Sea and Offshore Africa. At Canadian Natural, we strive to provide opportunities based on your abilities, helping you to contribute in a meaningful way and apply your academic experience to challenging and rewarding projects. We believe our employees are the key to unlocking potential. Join our team and be a part of a culture that focuses on developing people, working together and doing it right with fun and integrity.",
@@ -125,6 +146,7 @@
                 img_link: "https://www.cnrl.com/",
                 linkedin: "https://www.linkedin.com/company/cnrl/",
                 sizes: ["200px", "10px", "400px"],
+                present_date: ['Jan11'],
             },
             {
                 name: "Capital Engineering",
@@ -134,6 +156,7 @@
                 img_link: "http://www.capitaleng.ca",
                 linkedin: "https://www.linkedin.com/company/2579463/admin/feed/posts/",
                 sizes: ["200px", "10px", "500px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "Chandos Construction",
@@ -143,6 +166,7 @@
                 img_link: "https://www.chandos.com/",
                 linkedin: "https://www.linkedin.com/company/chandos/",
                 sizes: ["200px", "10px", "400px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "Clark Builders",
@@ -152,6 +176,7 @@
                 img_link: "https://www.clarkbuilders.com/",
                 linkedin: "https://www.linkedin.com/company/clark-builders_2/",
                 sizes: ["200px", "40px", "600px"],
+                present_date: ['Jan9'],
             },
             {   name: "Clifton Engineering Group Inc.",
                 description: "Clifton, an award-winning engineering and environmental consultancy, opened its doors in 1978 as a four-person engineering start-up. The goal was simple: provide innovative and pragmatic solutions to help our clients build our communities. Forty years later, we are now one of Western Canada’s most relied upon engineering firms, harnessing regional cutting-edge research and resources to deliver world-class engineering and environmental solutions. <br><br> We deliver projects across Western and Northern Canada and internationally.",
@@ -160,6 +185,7 @@
                 img_link: "https://www.clifton.ca/",
                 linkedin: "https://ca.linkedin.com/company/clifton-engineering-group",
                 sizes: ["200px", "40px", "350px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Colliers Project Leaders",
                 description: "Colliers Project Leaders. We’re not just project managers. We go well beyond costs, schedules and project plans. We act for owners to drive value and performance in capital projects. We share their vision and protect their interests so that they can be confident of success. We’ve led over 15,000+ projects that: <ul><li>Make cities livable. <li>Enhance workplaces. <li>Create spaces worth coming back to.<li>Improve patient care.<li>Deliver clean drinking water.<li>Build a sustainable future.</ul>",
@@ -168,6 +194,7 @@
                 img_link: "https://www.colliersprojectleaders.com/",
                 linkedin: "https://www.linkedin.com/showcase/colliers-project-leaders-canada/",
                 sizes: ["240px", "60px", "400px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "ConeTec",
@@ -177,6 +204,7 @@
                 img_link: "http://www.conetec.com",
                 linkedin: "https://www.linkedin.com/company/coneteccompany",
                 sizes: ["200px", "0px", "140px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "Conuma Resources",
@@ -186,6 +214,7 @@
                 img_link: "http://conumaresources.com",
                 linkedin: "https://www.linkedin.com/company/conumaresources",
                 sizes: ["200px", "10px", "450px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Corrosion Service",
                 description: "Corrosion Service was founded in 1950 as the first Canadian firm to specialize in cathodic protection. Our founding philosophy was based on the principles of providing great customer service and developing a deep understanding of customer needs, these same core principles still guide our company today. <br><br> We are a team of industry professionals who are dedicated to protecting the environment, our fellow citizens and the prosperity of our communities by applying our skills and knowledge safely to prevent corrosion. We will strive to partner with our clients in a forthright and supportive manner, so that we can provide them with the most advanced tools, techniques and knowledge needed to preserve the integrity of their infrastructure.",
@@ -194,6 +223,7 @@
                 img_link: "https://corrosionservice.com/",
                 linkedin: "https://www.linkedin.com/company/corrosion-service-company-ltd/",
                 sizes: ["220px", "70px"],
+                present_date: ['Jan11'],
             },
             {   name: "De Havilland",
                 description: "De Havilland Aircraft of Canada Limited is a Canadian-owned and operated aircraft manufacturer dedicated to providing rewarding opportunities in a diverse and welcoming workplace.  Our strong entrepreneurial spirit, together with a culture of empowerment, quality and innovation create opportunities to grow and succeed in an organization with a proud heritage and bright future.",
@@ -202,6 +232,7 @@
                 img_link: "https://dehavilland.com/en",
                 linkedin: "https://www.linkedin.com/company/dehavillandcanada/",
                 sizes: ["200px", "30px", "700px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {
                 name: "Dillon Consulting",
@@ -211,6 +242,7 @@
                 img_link: "https://www.dillon.ca/",
                 linkedin: "https://www.linkedin.com/company/dillon-consulting-limited/",
                 sizes: ["200px", "10px", "300px"],
+                present_date: ['Jan10'],
             },
             {
                 name: "Drivewyze",
@@ -220,6 +252,7 @@
                 img_link: "https://drivewyze.com/",
                 linkedin: "https://www.linkedin.com/company/drivewyze/",
                 sizes: ["200px", "50px"],
+                present_date: ['Jan10'],
             },
             {   name: "EllisDon & PME",
                 description: "EllisDon contributes to building great cities around the world. The unique way in which we work has enabled us to consistently build on our knowledge and experience and hone our capabilities over many diverse markets. Our work in healthcare, commercial, mixed use, cultural, residential & hospitality, government & judicial, education and beyond means there’s no ground we haven’t covered. We’re proud to be one of the most trusted builders to deliver on projects that are vital to our communities.",
@@ -228,14 +261,7 @@
                 img_link: "https://www.ellisdon.com/",
                 linkedin: "https://www.linkedin.com/company/ellisdon/ ",
                 sizes: ["200px", "15px", "700px"],
-            },
-            {   name: "Englobe",
-                description: "Englobe is one of Canada’s premier firms specializing in professional engineering services, environmental sciences, and soil and biomass treatment. With offices located across Canada, the United Kingdom and France, we are conveniently located to support large and small scale projects, through different stages, in many sectors. Offering a range of value-added services that run the gamut from professional consulting services to turnkey project implementation, Englobe has developed a reputation for integrity, credibility, and people-centered values.",
-                disciplines: ["Civil", "Environmental", "Materials", "Mechanical", "First Year Students"],
-                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/5adbb38f-d360-4e0f-b27e-550238d67c6f/logo_noir_rectangle+-+Vanessa+Parisien.png?content-type=image%2Fpng",
-                img_link: "https://www.englobecorp.com/",
-                linkedin: "https://www.linkedin.com/company/englobecorp/",
-                sizes: ["200px", "40px", "500px"],
+                present_date: ['Jan11'],
             },
             {
                 name: "Enfinite",
@@ -245,6 +271,16 @@
                 img_link: "https://www.enfinite.com/",
                 linkedin: "https://www.linkedin.com/company/enfinite/",
                 sizes: ["200px", "20px", "500px"],
+                present_date: ['Jan9'],
+            },
+            {   name: "Englobe",
+                description: "Englobe is one of Canada’s premier firms specializing in professional engineering services, environmental sciences, and soil and biomass treatment. With offices located across Canada, the United Kingdom and France, we are conveniently located to support large and small scale projects, through different stages, in many sectors. Offering a range of value-added services that run the gamut from professional consulting services to turnkey project implementation, Englobe has developed a reputation for integrity, credibility, and people-centered values.",
+                disciplines: ["Civil", "Environmental", "Materials", "Mechanical", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/5adbb38f-d360-4e0f-b27e-550238d67c6f/logo_noir_rectangle+-+Vanessa+Parisien.png?content-type=image%2Fpng",
+                img_link: "https://www.englobecorp.com/",
+                linkedin: "https://www.linkedin.com/company/englobecorp/",
+                sizes: ["200px", "40px", "500px"],
+                present_date: ['Jan11'],
             },
             {
                 name: "Garmin Canada",
@@ -254,6 +290,7 @@
                 img_link: "https://www.garmin.com/en-CA/careers/",
                 linkedin: "https://www.linkedin.com/company/garmin/life/wearegarmin/",
                 sizes: ["200px", "10px", "500px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Graham Construction",
                 description: "We are an employee-owned construction solutions partner with revenues exceeding $4 billion annually. With over nine decades of experience, and offices throughout North America, we deliver lasting value through projects that enable people and communities to live, work, move and grow in a rapidly changing world.",
@@ -262,6 +299,7 @@
                 img_link: "https://grahambuilds.com/",
                 linkedin: "https://ca.linkedin.com/company/grahambuilds",
                 sizes: ["200px", "70px", "350px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "Kruger Pulp & Paper",
@@ -271,6 +309,7 @@
                 img_link: "https://www.kruger.com/",
                 linkedin: "https://www.linkedin.com/company/kruger-inc-/",
                 sizes: ["200px", "5px", "500px"],
+                present_date: ['Jan9'],
             },
             {   name: "Lafarge",
                 description: "Lafarge is at the forefront of Green Growth, leading Canadian construction with innovative, sustainable building solutions. <br><br> We are dedicated to decarbonizing building end-to-end, aligning with our purpose to build progress for people and the planet.",
@@ -279,15 +318,7 @@
                 img_link: "http://www.lafarge.ca",
                 linkedin: "https://www.linkedin.com/company/lafargecanada/",
                 sizes: ["200px", "50px"],
-            },
-            {
-                name: "McElhanney",
-                description: "Established in 1910, McElhanney is an employee-owned company that provides surveying, engineering, GIS & remote sensing, community & transportation planning, landscape architecture, environmental services, and more. We have 33 locations across Western Canada to serve cities, communities & parks, energy & resources, and transportation sectors. We operate locally in the communities where we live and work and share staff resources across the company to meet our clients’ needs with efficiency and the best expertise.",
-                disciplines: ["Civil", "Electrical", "Environmental", "Materials", "Mechanical", "Mining"],
-                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/3b5b940e-e554-48f2-bb73-cb163401b5bb/McElhanneyLogo_VerticalCMYK_300ppi+-+Salima+Akbari.jpg?content-type=image%2Fjpeg",
-                img_link: "https://www.mcelhanney.com/",
-                linkedin: "https://www.linkedin.com/company/mcelhanney/",
-                sizes: ["200px", "20px", "400px"],
+                present_date: ['Jan11'],
             },
             {
                 name: "Magna IV Engineering",
@@ -297,6 +328,17 @@
                 img_link: "http://www.magnaiv.com",
                 linkedin: "https://www.linkedin.com/company/magna-iv-engineering/?viewAsMember=true",
                 sizes: ["200px", "40px", "600px"],
+                present_date: ['Jan9'],
+            },
+            {
+                name: "McElhanney",
+                description: "Established in 1910, McElhanney is an employee-owned company that provides surveying, engineering, GIS & remote sensing, community & transportation planning, landscape architecture, environmental services, and more. We have 33 locations across Western Canada to serve cities, communities & parks, energy & resources, and transportation sectors. We operate locally in the communities where we live and work and share staff resources across the company to meet our clients’ needs with efficiency and the best expertise.",
+                disciplines: ["Civil", "Electrical", "Environmental", "Materials", "Mechanical", "Mining"],
+                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/3b5b940e-e554-48f2-bb73-cb163401b5bb/McElhanneyLogo_VerticalCMYK_300ppi+-+Salima+Akbari.jpg?content-type=image%2Fjpeg",
+                img_link: "https://www.mcelhanney.com/",
+                linkedin: "https://www.linkedin.com/company/mcelhanney/",
+                sizes: ["200px", "20px", "400px"],
+                present_date: ['Jan9'],
             },
             {   name: "Michels Canada",
                 description: "Michels Canada builds safe, specialized energy and infrastructure construction solutions focused on Canada’s future. Our teams perform new construction and rehabilitation services focused on daily necessities including clean energy and protected natural resources. <br>Guided by our past and inspired by future to create a safer, cleaner, sustainable future, the Michels Canada team collaborates with our customers to deliver creativity, consistency, quality and an industry-leading safety culture. As part of the Michels Family of Companies, we share experience gained on some of the world’s most complex projects to develop new, better ways to meet the world’s changing needs.",
@@ -305,6 +347,7 @@
                 img_link: "https://www.michelscanada.com/",
                 linkedin: "https://www.linkedin.com/company/michels-canada/",
                 sizes: ["200px", "30px", "500px"],
+                present_date: ['Jan10'],
             },
             {
                 name: "Mosaic Company",
@@ -314,6 +357,7 @@
                 img_link: "http://www.mosaicco.com",
                 linkedin: "https://www.linkedin.com/company/mosaiccompany",
                 sizes: ["200px", "30px", "300px"],
+                present_date: ['Jan9'],
             },
             {
                 name: "North American Construction Group",
@@ -323,6 +367,7 @@
                 img_link: "http://www.nacg.ca",
                 linkedin: "https://www.linkedin.com/company/north-american-construction-group/",
                 sizes: ["200px", "10px", "500px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "ONxpress",
@@ -332,6 +377,7 @@
                 img_link: "https://onxpress.com/about-onxpress/",
                 linkedin: "https://www.linkedin.com/company/onxpress-transportation-partners/",
                 sizes: ["200px", "30px", "500px"],
+                present_date: ['Jan10'],
             },
             {   name: "PCL Construction",
                 description: "From small renovations to complex billion-dollar projects. From modular construction to advanced digital technologies to cutting-edge sustainability, PCL has you covered.<br>We redefine full-service and bring expertise across all project types, at all scales and under all procurement models. As innovative solution providers and construction specialists, we leverage our expertise to customize the right approach for your project, maximizing value for the best price. <br>Flexible, focused and innovative: we're focused on achieving your project vision and business goals.",
@@ -340,6 +386,7 @@
                 img_link: "https://www.pcl.com/ca/en",
                 linkedin: "https://www.linkedin.com/company/pcl-construction/",
                 sizes: ["220px", "5px", "250px"],
+                present_date: ['Jan9'],
             },
             {   name: "Peloton",
                 description: "The Peloton Platform energizes the oil and gas digital transformation through mobility, automation and data integration by providing fully integrated well data lifecycle, production data lifecycle and land data management solutions. Today, over 600 oil and gas clients worldwide rely on Peloton technology to equip their stakeholders with the tools and information necessary to manage, simplify and optimize their operations. For more information, visit www.peloton.com.",
@@ -348,6 +395,7 @@
                 img_link: "https://www.peloton.com/",
                 linkedin: "https://www.linkedin.com/company/peloton/",
                 sizes: ["200px", "30px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "PepsiCo Foods Canada",
                 description: "PepsiCo Canada employs nearly 11,000 Canadians and is organized into two business units - PepsiCo Beverages Canada, which includes brands such as Pepsi, Gatorade and Tropicana; and PepsiCo Foods Canada, which includes Frito Lay Canada and Quaker foods & snacks. PepsiCo Canada, in turn, belongs to the global PepsiCo, Inc., family.",
@@ -356,6 +404,7 @@
                 img_link: "http://www.pepsico.ca",
                 linkedin: "https://www.linkedin.com/company/pepsico",
                 sizes: ["200px", "30px", "500px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "Power Engineers",
@@ -365,6 +414,7 @@
                 img_link: "http://www.powereng.com",
                 linkedin: "https://www.linkedin.com/company/power-engineers/",
                 sizes: ["200px", "20px", "400px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Primary Engineering and Construction",
                 description: "For over 21 years, Primary has been an engineering and construction leader specializing in electric utility distribution, transmission, substation, telecommunication, lighting, traffic signalization, and building electrical services. We provide design, construction, and Turnkey/Design-Build options for clients including electric utility companies, telecommunications, land developers, municipalities, commercial and industrial businesses, energy companies, and private contractors. We partner with our clients to provide quality, tailored, and complete electrical engineering and communications distribution solutions that instill confidence, build trust, and allow you to achieve your goals.",
@@ -373,6 +423,7 @@
                 img_link: "https://primaryeng.com/",
                 linkedin: "https://www.linkedin.com/company/primary-engineering-and-construction/mycompany/",
                 sizes: ["200px", "40px", "400px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "Rising Edge Group",
                 description: "Rising Edge Group is a high voltage electrical contractor providing safe, cost-effective, and fit-for-purpose project solutions to the power industry. Since our inception in 2002, Rising Edge has grown to provide a wide array of services in the power generation, transmission, fabrication, and industrial industries. From conceptual design to commissioning, each aspect of your project is handled by trained industry specialists, resulting in a product that is complete, on-time, and on-budget.",
@@ -381,6 +432,7 @@
                 img_link: "https://risingedgegroup.com/",
                 linkedin: "https://www.linkedin.com/company/rising-edge-group/",
                 sizes: ["200px", "40px", "400px"],
+                present_date: ['Jan10'],
             },
             {   name: "Spartan Controls",
                 description: "Experience industrial innovation at Spartan Controls—the recognized leading provider of industrial automation solutions in Western Canada. For over 59 years, Spartan has provided customers with high performance solutions, industry expertise, lifecycle support, and technical training—delivering value our customers want. <br><br> Our automation solutions are used in all process industries including oil and gas, oil sands, mining, chemical, pulp and paper, power, pipeline, and municipal. We are dedicated to creating a sustainable modern world and providing exceptional customer experiences where expertise and collaboration come together.",
@@ -389,6 +441,7 @@
                 img_link: "https://www.spartancontrols.com/",
                 linkedin: "https://www.linkedin.com/company/spartan-controls/",
                 sizes: ["200px", "20px", "400px"],
+                present_date: ['Jan9'],
             },  
             {   name: "Stantec",
                 description: "Communities are fundamental. Whether around the corner or across the globe, they provide a foundation, a sense of place and of belonging. That's why at Stantec, we always design with community in mind.<br><br>We care about the communities we serve—because they're our communities too. We're designers, engineers, scientists, and project managers, innovating together at the intersection of community, creativity, and client relationships. Balancing these priorities results in projects that advance the quality of life in communities across the globe. Stantec trades on the TSX and the NYSE under the symbol STN. Visit us at stantec.com or find us on social media.",
@@ -397,6 +450,7 @@
                 img_link: "https://www.stantec.com/en",
                 linkedin: "https://www.linkedin.com/company/stantec/",
                 sizes: ["220px", "70px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {
                 name: "Suncor Energy",
@@ -406,6 +460,7 @@
                 img_link: "http://www.suncor.com",
                 linkedin: "https://www.linkedin.com/company/suncor/about/",
                 sizes: ["200px", "30px", "300px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {
                 name: "Terracon Geotechnique",
@@ -415,6 +470,7 @@
                 img_link: "https://terracon.ca/",
                 linkedin: "https://www.linkedin.com/company/terracon-geotechnique-ltd./",
                 sizes: ["200px", "50px", "500px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "Tetra Tech Canada",
                 description: "We combine consulting and engineering with advanced analytics and technology to solve the world’s most complex challenges. Our innovation hubs across the globe will enable you to share ideas and best practices while growing your professional network. Wherever you are in your career journey, you will benefit from working with world-class engineers, scientists, and technical specialists.",
@@ -423,6 +479,7 @@
                 img_link: "http://www.tetratech.com",
                 linkedin: "https://www.linkedin.com/company/tetra-tech/",
                 sizes: ["200px", "30px", "400px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Thurber Engineering Ltd.",
                 description: "Thurber Engineering Ltd. is a Canadian consulting firm wholly-owned by senior practicing professionals. The company was founded in 1957, and has grown to employ over 500 engineers, geoscientists and technologists across Canada, providing a variety of Geotechnical, Geo-Environmental and Materials Engineering and Testing Services. Our staff are led by a core group of senior principals, specialists, and practicing professionals who have many years of practical experience in a variety of technical specialties.",
@@ -431,14 +488,7 @@
                 img_link: "http://Thurber.ca",
                 linkedin: "https://www.linkedin.com/company/thurbereng/",
                 sizes: ["200px", "20px", "400px"],
-            },
-            {   name: "TransAlta",
-                description: "TransAlta owns, operates, and develops a diverse fleet of electrical generation assets in Canada, the United States, and Australia, providing municipalities, industries, and businesses with safe, low-cost, and reliable clean electricity. For over 111 years, TransAlta has been a responsible operator and proud community member where its employees work and live. We are committed to fostering a dynamic, productive, and safe work environment. Our employees contribute to a diverse, open, and transparent culture with clear accountabilities, strong leadership, and challenging opportunities for personal career growth.",
-                disciplines: ["Mechanical", "Electrical", "Civil", "Computer", "Chemical", "Environmental", "Materials", "Petroleum", "Mining", "Engineering Physics", "First Year Students"],
-                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/866c4fbb-3e0a-46bb-9ef0-c2c7f04b7ee9/transalta_logo+-+Rockson+Yoo.jpg?content-type=image%2Fjpeg",
-                img_link: "https://transalta.com",
-                linkedin: "https://www.linkedin.com/company/transalta",
-                sizes: ["200px", "0px", "200px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             {   name: "Trane Technologies",
                 description: "At Trane Technologies and through our businesses including Trane and Thermo King, we create innovative climate solutions for buildings, homes, and transportation that challenge what’s possible for a sustainable world. <br>In the Trane Technologies Graduate Training Program (GTP) and Internships, you’ll learn from experts in the field, who are committed to preparing you for a rewarding career in Technical Sales Engineering, Energy Engineering, or Contracting Project Management. Each program offers you intensive technical, business and leadership training. Here at Trane Technologies, our goal is to uplift talent and provide options for career paths after graduation. ",
@@ -447,6 +497,16 @@
                 img_link: "https://careers.tranetechnologies.com/global/en/studentandgraduates",
                 linkedin: "https://www.linkedin.com/company/tranetechnologies",
                 sizes: ["200px", "50px", "350px"],
+                present_date: ['Jan9', 'Jan10'],
+            },
+            {   name: "TransAlta",
+                description: "TransAlta owns, operates, and develops a diverse fleet of electrical generation assets in Canada, the United States, and Australia, providing municipalities, industries, and businesses with safe, low-cost, and reliable clean electricity. For over 111 years, TransAlta has been a responsible operator and proud community member where its employees work and live. We are committed to fostering a dynamic, productive, and safe work environment. Our employees contribute to a diverse, open, and transparent culture with clear accountabilities, strong leadership, and challenging opportunities for personal career growth.",
+                disciplines: ["Mechanical", "Electrical", "Civil", "Computer", "Chemical", "Environmental", "Materials", "Petroleum", "Mining", "Engineering Physics", "First Year Students"],
+                img_src: "https://images.squarespace-cdn.com/content/5ea4d3f4c5cdad5a2eb79812/866c4fbb-3e0a-46bb-9ef0-c2c7f04b7ee9/transalta_logo+-+Rockson+Yoo.jpg?content-type=image%2Fjpeg",
+                img_link: "https://transalta.com",
+                linkedin: "https://www.linkedin.com/company/transalta",
+                sizes: ["200px", "0px", "200px"],
+                present_date: ['Jan10', 'Jan11'],
             },
             {   name: "Urban Systems",
                 description: "We are community consultants, brought together by our shared values, and a deep commitment to building vibrant communities. Since we were founded in 1975, we have worked alongside municipalities, governments, Indigenous communities, agencies, and private sector clients to make communities the best they can be. We do this through safe and sustainable transportation networks, green spaces, water systems, clean energy sources, and so much more. Our work and areas of practice are constantly evolving—because communities of all shapes and sizes are constantly evolving too.",
@@ -455,6 +515,7 @@
                 img_link: "https://urbansystems.ca/",
                 linkedin: "https://www.linkedin.com/company/urban-systems-ltd-/",
                 sizes: ["200px", "40px"],
+                present_date: ['Jan10'],
             },
             {   name: "Weatherford Canada",
                 description: "Weatherford International plc is a leading global energy services company. Operating in approximately 75 countries, the Company answers the challenges of the energy industry with its global talent network of approximately 17,000 team members and approximately 350 operating locations, including manufacturing, research and development, service, and training facilities.",
@@ -463,6 +524,7 @@
                 img_link: "http://www.weatherford.com",
                 linkedin: "https://www.linkedin.com/company/weatherford/",
                 sizes: ["200px", "30px"],
+                present_date: ['Jan9'],
             },
             {   name: "Westpower",
                 description: "Westpower is the leading North American rotating equipment solutions provider with services spanning industrial and engineered pumps, fabricated engineered fluid systems, reliability and lubrication products, field service and repair solutions that enhance performance.",
@@ -471,6 +533,7 @@
                 img_link: "https://westpowergroup.com/",
                 linkedin: "https://www.linkedin.com/company/westpower/",
                 sizes: ["200px", "70px", "400px"],
+                present_date: ['Jan10'],
             },
             {   name: "Wood Canada Limited",
                 description: "Leading consulting and engineering. With 35,000 professionals, across 60 countries, we are one of the world’s leading consulting and engineering companies operating across Energy and Materials markets.United by our common purpose to unlock solutions to the world’s most critical challenges, we are future ready, now.<br>At Wood, we recognise that achieving a sustainable future is one of the biggest challenges facing our generation.<br>It underpins all that we do. It is what unites us and what makes us unique. We are led by our purpose to unlock solutions to the world’s most critical challenges, in energy and materials markets.",
@@ -479,6 +542,7 @@
                 img_link: "https://www.woodplc.com",
                 linkedin: "https://www.linkedin.com/company/woodplc",
                 sizes: ["200px", "50px"],
+                present_date: ['Jan9'],
             },
             {   name: "Young Canadians for Resources",
                 description: "Young Canadians for Resources is a volunteer, youth advocacy initiative created by students and young professionals, for students and young professionals. We are a student-led movement on campuses across Canada from coast to coast. YCR encourages young Canadians to have a balanced and informed conversation about our natural resources and the environment. We are working together to find solutions and bridge the gap in the current narrative.  People, planet, and prosperity are the cornerstones of what we stand for and what we value.",
@@ -487,22 +551,26 @@
                 img_link: "https://youngcanadiansforresources.ca/",
                 linkedin: "https://www.linkedin.com/company/ycresources ",
                 sizes: ["200px", "0px", "250px"],
+                present_date: ['Jan9', 'Jan10'],
             },
             ]
         // List of Disciplines "Chemical", "Civil", "Computer", "Electrical", "Environmental", "Materials", "Mechanical", "Mining", "Petroleum", "Engineering Physics", "First Year Students"
 
         function display_elements(dict) {
-            if (FILTER == 'All') {
+            if (FILTER === 'filter-All' && DATE_FILTER === 'date-All') {
                 dict.forEach(company => {
                     document.getElementById("companies-container").innerHTML += get_html_element(company);
                 });
             } else {
                 dict.forEach(company => {
-                    if (company.disciplines.includes(FILTER)) {
+                    const meetsDisciplineCriteria = FILTER === 'filter-All' || company.disciplines.includes(FILTER);
+                    const meetsDateCriteria = DATE_FILTER === 'date-All' || company.present_date.includes(DATE_FILTER);
+
+                    if (meetsDisciplineCriteria && meetsDateCriteria) {
                         document.getElementById("companies-container").innerHTML += get_html_element(company);
-                    };
+                    }
                 });
-            };
+            }
         };
 
         function get_html_element(comp) {
@@ -529,6 +597,19 @@
                 FILTER = button.getAttribute('data-filter');
                 document.getElementById(FILTER).style.color = "rgb(0, 73, 144)";
                 document.getElementById(FILTER).style.fontWeight = "700";
+                document.getElementById("companies-container").innerHTML = '';
+                display_elements(companies);
+            });
+        });
+
+        DATE_BUTTONS.forEach(button => {
+            button.addEventListener('click', () => {
+                // Change Previous FILTER to Black and Update New FILTER and Color
+                document.getElementById(DATE_FILTER).style.color = "black";
+                document.getElementById(DATE_FILTER).style.fontWeight = "400";
+                DATE_FILTER = button.getAttribute('data-filter');
+                document.getElementById(DATE_FILTER).style.color = "rgb(0, 73, 144)";
+                document.getElementById(DATE_FILTER).style.fontWeight = "700";
                 document.getElementById("companies-container").innerHTML = '';
                 display_elements(companies);
             });
@@ -588,7 +669,7 @@
             background-color: rgb(0, 60, 120);
         }
 
-        .discipline-btn {
+        .discipline-btn, .date-btn {
             padding: 5px;
             width: 100%;
             text-align: left;
@@ -668,7 +749,7 @@
             margin: auto
         }
 
-        #All {
+        #filter-All, #date-All {
             /* Initialize the All Discipline btn to correct color */
             color: rgb(0, 73, 144);
             font-weight: 700;
